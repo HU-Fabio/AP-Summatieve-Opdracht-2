@@ -14,6 +14,10 @@ public class TextFSM implements FSM {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public Node getStartNode() {
         return startNode;
     }
