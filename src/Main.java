@@ -1,18 +1,31 @@
+import javax.annotation.processing.SupportedSourceVersion;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) throws Exception {
-        FSM FSM = new FSM("textFSM");
+        boolean running = true;
+        while (running) {
+            System.out.println("Welcome to FSM creator");
+            System.out.println();
+            CLI cli = new CLI();
 
-        Node n1 = new Node("N1", false);
-        Node n2 = new Node("N2", false);
-        Node n3 = new Node("N3", true);
-        Node n4 = new Node("N4", true);
+            boolean fsmCreated = true;
+            while(fsmCreated) {
+                System.out.println("Name of the FSM machine:");
 
-        FSM.setStartNode(n1);
+                Scanner FSMInputName = new Scanner(System.in);
+                String FSMName = FSMInputName.nextLine();
 
-        n1.addNode("0.5", n2);
-        n1.addNode("0.3", n3);
-        n1.addNode("0.2", n4);
+                System.out.println("Type of FSM machine");
 
-        System.out.println(FSM.nextKey());
+                Scanner FSMTypeInput = new Scanner(System.in);
+                String FSMType = FSMTypeInput.nextLine();
+
+                fsmCreated = cli.createFSMMachine(FSMName, FSMType);
+            }
+
+
+            running = false;
+        }
     }
 }

@@ -4,9 +4,11 @@ public class FSM {
     private String name;
     private Node startNode;
     private Node currentNode;
+    private String type;
 
-    public FSM(String name) {
+    public FSM(String name, String type) {
         this.name = name;
+        this.type = type;
     }
 
     public void setName(String name) {
@@ -34,6 +36,14 @@ public class FSM {
 
     public void setCurrentNode(Node currentNode) {
         this.currentNode = currentNode;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Node next(String key) {
