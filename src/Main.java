@@ -1,5 +1,4 @@
-import javax.annotation.processing.SupportedSourceVersion;
-import java.util.Scanner;
+import java.io.Serializable;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -11,17 +10,28 @@ public class Main {
 
             boolean fsmCreated = true;
             while(fsmCreated) {
-                System.out.println("Name of the FSM machine:");
+                FSM currentMachine = cli.createFSMMachine();
 
-                Scanner FSMInputName = new Scanner(System.in);
-                String FSMName = FSMInputName.nextLine();
+                if(currentMachine != null) {
+                    fsmCreated = false;
+                }
+            }
 
-                System.out.println("Type of FSM machine");
+            boolean nodeCreated = true;
 
-                Scanner FSMTypeInput = new Scanner(System.in);
-                String FSMType = FSMTypeInput.nextLine();
+            while(nodeCreated) {
+                Serializable currentNode = cli.createNode();
 
-                fsmCreated = cli.createFSMMachine(FSMName, FSMType);
+                if (currentNode.equals(true)) {
+                    nodeCreated = false;
+                }
+
+            }
+
+            boolean transitionCreated = true;
+
+            while(transitionCreated) {
+
             }
 
 
