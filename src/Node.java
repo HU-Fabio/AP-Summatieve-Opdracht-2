@@ -4,10 +4,12 @@ public class Node {
     private String name;
     private HashMap<String, Node> transition = new HashMap<>();
     private Boolean isEndNode;
+    private FSM machine;
 
-    public Node(String name, Boolean isEndNode) {
+    public Node(String name, Boolean isEndNode, FSM machine) {
         this.name = name;
         this.isEndNode = isEndNode;
+        this.machine = machine;
     }
 
     public void addNode(String k, Node n) {
@@ -36,6 +38,7 @@ public class Node {
                 "name='" + name + '\'' +
                 ", transition=" + transition +
                 ", isEndNode=" + isEndNode +
+                ", machine=" + machine +
                 '}';
     }
 }

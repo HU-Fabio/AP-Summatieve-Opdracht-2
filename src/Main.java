@@ -22,17 +22,15 @@ public class Main {
             while(nodeCreated) {
                 Serializable currentNode = cli.createNode();
 
-                if (currentNode.equals(true)) {
-                    nodeCreated = false;
+                if (currentNode != null) {
+                    if (currentNode.equals(true)) {
+                        nodeCreated = false;
+                    }
                 }
 
             }
 
             boolean transitionCreated = true;
-
-            while(transitionCreated) {
-
-            }
 
 
             running = false;
