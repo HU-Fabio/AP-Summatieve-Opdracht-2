@@ -32,6 +32,25 @@ public class Main {
 
             boolean transitionCreated = true;
 
+            while(transitionCreated) {
+                Serializable x = cli.createTransition();
+
+                if (x != null) {
+                    if (x.equals(true)) {
+                        transitionCreated = false;
+                    }
+                }
+            }
+
+            boolean simulation = true;
+
+            while(simulation) {
+                boolean y = cli.simulate();
+
+                if (y) {
+                    simulation = false;
+                }
+            }
 
             running = false;
         }

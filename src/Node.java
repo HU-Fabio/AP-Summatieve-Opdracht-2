@@ -32,13 +32,11 @@ public class Node {
         return isEndNode;
     }
 
-    @Override
-    public String toString() {
-        return "Node{" +
-                "name='" + name + '\'' +
-                ", transition=" + transition +
-                ", isEndNode=" + isEndNode +
-                ", machine=" + machine +
-                '}';
+    public FSM getMachine() {
+        return machine;
+    }
+
+    public void setMachine(FSM machine) {
+        this.machine = machine;
     }
 }
