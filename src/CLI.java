@@ -29,25 +29,13 @@ public class CLI {
         this.nodes.add(node);
     }
 
-    public FSM createFSMMachine() {
-        System.out.println("Name of the FSM machine:");
-
-        Scanner FSMInputName = new Scanner(System.in);
-        String FSMName = FSMInputName.nextLine();
-
-        System.out.println("Type of FSM machine (enter ? to see all types)");
-
-        Scanner FSMTypeInput = new Scanner(System.in);
-        String FSMType = FSMTypeInput.nextLine();
-        
+    public FSM createFSMMachine(String FSMName, String FSMType) {
         if (FSMName == null || FSMType == null) {
             System.out.println("Name or Type cannot be null of the FSM machine");
             return null;
         } else if (FSMType.toUpperCase().equals("TEXT") || FSMType.toUpperCase().equals("CHANCE")) {
             FSM newFSM = new FSM(FSMName, FSMType.toUpperCase());
             addMachine(newFSM);
-
-            System.out.println("FSM Generated! Now let's add some nodes to it!");
 
             return newFSM;
         } else if(FSMType.equals("?")) {
@@ -61,25 +49,13 @@ public class CLI {
         }
     }
 
-    public Serializable createNode() {
-        System.out.println("What is the name of the node?");
+    public Serializable createNode(String nodeEnd, String nodeName) {
+        System.out.println("To which FSM is this node related?");
+        FSM machine = findMachine();
 
-        Scanner nodeInputName = new Scanner(System.in);
-        String nodeName = nodeInputName.nextLine();
-
-        if (nodeName.equals("")) {
-            System.out.println("You have to give the node a name!");
+        if (machine == null) {
             return null;
         }
-
-        System.out.println("Is it an end node? (true or false)");
-
-        Scanner nodeInputEnd = new Scanner(System.in);
-        String nodeEnd = nodeInputEnd.nextLine();
-
-        System.out.println("To which FSM is this node related?");
-
-        FSM machine = findMachine();
 
         boolean end;
         if (nodeEnd.toUpperCase().equals("FALSE")) {
@@ -106,17 +82,8 @@ public class CLI {
 
     }
 
-    public Serializable createTransition() {
-        System.out.println("For which machine do you want to create transitions?");
-        FSM machine = findMachine();
+    public Serializable createTransition(FSM machine, Node node, Node nodeTo) {
 
-        System.out.println("These are the current created nodes for the chosen machine.");
-        System.out.println("For which node do you want to create a transition?");
-        Node node = findNode(machine);
-
-        System.out.println("These are the current created nodes for the chosen machine.");
-        System.out.println("Where should " + node.getName() + " transition to?");
-        Node nodeTo = findNode(machine);
 
         HashMap<String, Node> transitions = node.getTransition();
 
@@ -169,10 +136,8 @@ public class CLI {
         return continueChoice();
     }
 
-    public boolean simulate() throws Exception {
-        System.out.println("Which machine do you want to simulate?");
+    public boolean simulate(FSM machine) throws Exception {
 
-        FSM machine = findMachine();
 
         ArrayList<String> pathHistory = new ArrayList<>();
 
@@ -201,6 +166,8 @@ public class CLI {
                     return false;
                 }
             }
+
+            pathHistory.add(machine.getCurrentNode().getName());
         }
 
         System.out.println("The simulation has been finished");
@@ -211,7 +178,7 @@ public class CLI {
             try {
                 System.out.println(pathHistory.get(i) + " -> " + pathHistory.get(i + 1));
             } catch (IndexOutOfBoundsException e) {
-                continue;
+                System.out.println(pathHistory.get(i));
             }
         }
 
@@ -220,6 +187,11 @@ public class CLI {
     }
 
     public Node findNode(FSM machine) {
+        if (this.nodes.size() == 0) {
+            System.out.println("There is no Node created yet! Please make one!");
+            return null;
+        }
+
         int counter = 0;
         for (Node node : this.nodes) {
             if(node.getMachine().equals(machine)) {
@@ -250,6 +222,11 @@ public class CLI {
     }
 
     public FSM findMachine() {
+        if (this.machines.size() == 0) {
+            System.out.println("There is no FSM machine created yet! Please make one!");
+            return null;
+        }
+
         for (int i = 0; i < this.machines.size(); i++) {
             System.out.println("[ " + i + " ] " + this.machines.get(i).getName() + " Type: " +  this.machines.get(i).getType());
         }
@@ -268,11 +245,6 @@ public class CLI {
                 machine = this.machines.get(Integer.parseInt(FSMRelation));
             } catch (IndexOutOfBoundsException | NumberFormatException e) {
                 System.out.println("Sorry, we couldn't find the machine: " + e);
-                return null;
-            }
-
-            if (machine == null) {
-                System.out.println("No machine defined");
                 return null;
             }
         }

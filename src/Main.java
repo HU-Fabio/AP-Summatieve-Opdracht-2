@@ -8,48 +8,11 @@ public class Main {
             System.out.println();
             CLI cli = new CLI();
 
-            boolean fsmCreated = true;
-            while(fsmCreated) {
-                FSM currentMachine = cli.createFSMMachine();
+            Menu menu = new Menu();
+            boolean inMainMenu = true;
 
-                if(currentMachine != null) {
-                    fsmCreated = false;
-                }
-            }
-
-            boolean nodeCreated = true;
-
-            while(nodeCreated) {
-                Serializable currentNode = cli.createNode();
-
-                if (currentNode != null) {
-                    if (currentNode.equals(true)) {
-                        nodeCreated = false;
-                    }
-                }
-
-            }
-
-            boolean transitionCreated = true;
-
-            while(transitionCreated) {
-                Serializable x = cli.createTransition();
-
-                if (x != null) {
-                    if (x.equals(true)) {
-                        transitionCreated = false;
-                    }
-                }
-            }
-
-            boolean simulation = true;
-
-            while(simulation) {
-                boolean y = cli.simulate();
-
-                if (y) {
-                    simulation = false;
-                }
+            while (inMainMenu) {
+                inMainMenu = menu.mainMenu(cli);
             }
 
             running = false;

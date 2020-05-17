@@ -8,7 +8,7 @@ public class FSM {
 
     public FSM(String name, String type) {
         this.name = name;
-        this.type = type;
+        this.type = type.toUpperCase();
     }
 
     public void setName(String name) {
